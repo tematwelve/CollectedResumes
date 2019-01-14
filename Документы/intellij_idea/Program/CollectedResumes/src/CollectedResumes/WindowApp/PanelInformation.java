@@ -4,184 +4,112 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Shows the panel that contains of elements the information.
+ * Creates the panel on which located the information about the database.
  */
 public class PanelInformation {
 
-    /**
-     * Creates the panel that contains of elements the information:
-     *     - search by city;
-     *     - search by salary;
-     *     - search by work experienceYear;
-     *     - search by age;
-     *     - search by all (id, titleResume, name).
-     */
-    private JPanel panelInformation = new JPanel();
+    private JPanel panelInformation;
 
-    /**
-     * Priority size of the database.
-     */
-    private JLabel labelPrioritySize = new JLabel();
+    private JLabel labelPrioritySize;
+    private JLabel labelSize;
+    private JLabel labelNumberFindsElement;
+    private JLabel labelNumberDisplayedElement;
 
-    /**
-     * Size of the database.
-     */
-    private JLabel labelSize = new JLabel();
+    private JPanel panelCondition;
+    private JLabel labelCondition;
+    private JProgressBar progressBarCondition; // progress bar the parser
 
-    /**
-     * The number of finds elements.
-     */
-    private JLabel labelNumberFindsElement= new JLabel();
-
-    /**
-     * The number of displayed elements.
-     */
-    private JLabel labelNumberDisplayedElement= new JLabel();
-
-    /**
-     * Condition the program.
-     */
-    private JLabel labelCondition = new JLabel();
-
-    /**
-     * Progress bar the parser.
-     */
-    private JProgressBar progressBar = new JProgressBar();
-
-    /**
-     * Constructor.
-     */
     PanelInformation() {
-        initializePanelInformation();
+        createPanelInformation();
 
         createLabelPrioritySize();
         createLabelSize();
         createLabelNumberFindsElements();
         createLabelNumberDisplayedElement();
+
         createPanelCondition();
     }
 
-    /**
-     * Initialize the panel information.
-     */
-    private void initializePanelInformation() {
-        panelInformation.setLayout(new GridBagLayout()); // add to the panel GridBagLayout manager
+    private void createPanelInformation() {
+        panelInformation = new JPanel();
+        panelInformation.setLayout(new GridBagLayout());
     }
 
-    /**
-     * Creates a label, a priority database size.
-     */
     private void createLabelPrioritySize() {
+        labelPrioritySize = new JLabel();
         panelInformation.add(labelPrioritySize,
                 new GridBagConstraints(0, 0, 1, 1, 0, 1,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(1, 1, 1, 20), 0, 0));
     }
 
-    /**
-     * Update priority the size of the database.
-     *
-     * @param prioritySize Sets the priority database size.
-     */
     public void updateLabelPrioritySize(final int prioritySize) {
-        labelPrioritySize.setText("Set size DB: " + prioritySize);
+        labelPrioritySize.setText("Priority size database: " + prioritySize);
     }
 
-    /**
-     * Creates a label, a database size.
-     */
     private void createLabelSize() {
+        labelSize = new JLabel();
         panelInformation.add(labelSize,
                 new GridBagConstraints(1, 0, 1, 1, 0, 1,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(1, 1, 1, 20), 0, 0));
-
-        updateLabelSize(0);
     }
 
-    /**
-     * Update the size of the database.
-     *
-     * @param size The size of the database.
-     */
     public void updateLabelSize(final int size) {
-        labelSize.setText("Get size DB: " + size);
+        labelSize.setText("Size database: " + size);
     }
 
-    /**
-     * Creates a label, a number finds of elements.
-     */
     private void createLabelNumberFindsElements() {
+        labelNumberFindsElement = new JLabel();
         panelInformation.add(labelNumberFindsElement,
                 new GridBagConstraints(2, 0, 1, 1, 0, 1,
                         GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                         new Insets(1, 1, 1, 20), 0, 0));
     }
 
-    /**
-     * Update the number finds of element.
-     *
-     * @param element Number of element.
-     */
     void updateLabelNumberFindElement(final int element) {
         labelNumberFindsElement.setText("Found resumes: " + element);
     }
 
-    /**
-     * Creates a label, a number displayed of elements.
-     */
     private void createLabelNumberDisplayedElement() {
+        labelNumberDisplayedElement = new JLabel();
         panelInformation.add(labelNumberDisplayedElement,
                 new GridBagConstraints(3, 0, 1, 1, 1, 1,
                         GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                         new Insets(1, 1, 1, 1), 0, 0));
     }
 
-    /**
-     * Update the number displayed of element.
-     *
-     * @param element Number of element.
-     */
     void updateLabelNumberDisplayedElement(final int element) {
         labelNumberDisplayedElement.setText("Displayed resumes: " + element);
     }
 
-    /**
-     * Creates a panel the condition.
-     */
     private void createPanelCondition() {
-        JPanel panelCondition = new JPanel();
-
-        labelCondition.setVisible(false);
-        panelCondition.add(labelCondition);
-
-        progressBar.setIndeterminate(true);
-        progressBar.setVisible(false);
-        panelCondition.add(progressBar);
-
+        panelCondition = new JPanel();
+        createLabelCondition();
+        createProgressBarCondition();
         panelInformation.add(panelCondition,
                 new GridBagConstraints(3, 0, 1, 1, 0, 1,
                         GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                         new Insets(1, 1, 1, 10), 0, 0));
     }
 
-    /**
-     * Editor text the panel condition.
-     *
-     * @param text Text the condition.
-     */
-    public void editorTextPanelCondition(final String text) {
-        labelCondition.setText(text);
+    private void createLabelCondition() {
+        labelCondition = new JLabel();
+        labelCondition.setText("Parsing. Please wait...");
+        labelCondition.setVisible(false);
+        panelCondition.add(labelCondition);
     }
 
-    /**
-     * Visibility the panel condition.
-     *
-     * @param visibility Visibility the panel condition.
-     */
+    private void createProgressBarCondition() {
+        progressBarCondition = new JProgressBar();
+        progressBarCondition.setIndeterminate(true);
+        progressBarCondition.setVisible(false);
+        panelCondition.add(progressBarCondition);
+    }
+
     public void visibilityPanelCondition(final boolean visibility) {
         labelCondition.setVisible(visibility);
-        progressBar.setVisible(visibility);
+        progressBarCondition.setVisible(visibility);
     }
 
     JPanel getPanelInformation() {

@@ -10,7 +10,7 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 /**
- * Shows the program.
+ * Creates a windowed application to display resumes that are in the database.
  */
 public class WindowApp {
 
@@ -27,112 +27,61 @@ public class WindowApp {
      *     - panelContent;
      *     - panelInformation.
      */
-    private JFrame mainFrame = new JFrame();
+    private JFrame mainFrame;
 
-    /**
-     * Creates the scroll bar on which located the content.
-     */
     private JScrollPane scrollPaneScrollBar = new JScrollPane();
 
-    /**
-     * The window size at width.
-     */
     private static final int SIZE_WINDOW_WIDTH = 800;
-
-    /**
-     * The window size at height.
-     */
     private static final int SIZE_WINDOW_HEIGHT = 600;
 
-    /**
-     * Closing the window app.
-     */
-    private boolean closing = false;
+    private boolean closing;
 
     /**
-     * Constructor.
+     * To control access to an object.
      */
+    private static final Object MONITOR = new Object();
+
     public WindowApp() {
-        initializeMainFrame();
+        initMainFrame();
+
+        initPanelInformation();
+        initPanelSearch();
+
+        initBack();
+
+        closingWinApp();
+    }
+
+    private void initMainFrame() {
+        mainFrame = new JFrame();
         configMainFrame();
-
-        panelInformation();
-        panelSearch();
-
-        initialBack();
-
-        closingMainFrame();
     }
 
-    /**
-     * Initialize the main frame.
-     */
-    private void initializeMainFrame() {
-        mainFrame.setTitle("Collected resumes"); // ask the name of the window "Collected resumes"
-        mainFrame.setLayout(new BorderLayout()); // add to the panel BorderLayout manager
-    }
-
-    /**
-     * Configuration main frame.
-     */
     private void configMainFrame() {
-        mainFrame.setPreferredSize(new Dimension(SIZE_WINDOW_WIDTH, SIZE_WINDOW_HEIGHT)); // the size of the window
-        mainFrame.setResizable(false); // not able to change of size the window
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // by clicking on the "x" closes the window
-        mainFrame.pack(); // the optimal size
-        mainFrame.setLocationRelativeTo(null); // the window in the center of the screen
-        mainFrame.setVisible(true); // window visibility state
+        mainFrame.setTitle("Collected resumes");
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.setPreferredSize(new Dimension(SIZE_WINDOW_WIDTH, SIZE_WINDOW_HEIGHT));
+        mainFrame.setResizable(false);
+        mainFrame.pack();
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setVisible(true);
     }
 
-    /**
-     * Shows the panel on which located the elements search.
-     */
-    private void panelSearch() {
+    private void initPanelInformation() {
+        panelInformation = new PanelInformation();
+        mainFrame.add(panelInformation.getPanelInformation(), BorderLayout.SOUTH); // add the panel information on the south main frame
+    }
+
+    private void initPanelSearch() {
         panelSearch = new PanelSearch(this);
         mainFrame.add(panelSearch.getPanelSearch(), BorderLayout.NORTH); // add the panel search on the north main frame
     }
 
     /**
-     * Shows the panel on which of located the main content.
+     * Creates a database. Creates a parser.
      */
-    private void panelContent(WindowApp windowApp, ArrayList<String> listId) {
-        panelContent = new PanelContent(dataBase, parser, windowApp, listId); // calling the panel visual content
-    }
-
-    /**
-     * Add the element on which the panel.
-     */
-    void showPanelContent(PanelContent panelContent) {
-        scrollPaneScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); // set the vertical scroll bar
-        this.panelContent = panelContent;
-        scrollPaneScrollBar.setViewportView(panelContent.getPanelContent());
-        mainFrame.add(scrollPaneScrollBar, BorderLayout.CENTER); // add the panel visual content on the center main frame
-    }
-
-    /**
-     * Remove all the content panel.
-     */
-    void removeContent() {
-        mainFrame.remove(scrollPaneScrollBar);
-        scrollPaneScrollBar.removeAll();
-        scrollPaneScrollBar = new JScrollPane();
-        mainFrame.add(scrollPaneScrollBar, BorderLayout.CENTER);
-        panelInformation.updateLabelNumberFindElement(0);
-        panelInformation.updateLabelNumberDisplayedElement(0);
-    }
-
-    /**
-     * Shows the panel on which located the information about the main values database.
-     */
-    private void panelInformation() {
-        panelInformation = new PanelInformation(); // calling the panel information
-        mainFrame.add(panelInformation.getPanelInformation(), BorderLayout.SOUTH); // add the panel information on the south main frame
-    }
-
-    /**
-     * Start database, parser. Send (database, parser) for background app.
-     */
-    private void initialBack() {
+    private void initBack() {
         dataBase = new DataBase(this);
         dataBase.setPrioritySize(25);
         dataBase.run();
@@ -140,22 +89,32 @@ public class WindowApp {
         parser = new Parser(this, dataBase);
         parser.run();
 
-        panelSearch.initialBack(dataBase, parser);
-        panelContent(this, dataBase.listIdSortingByColumn("timeUpdate", "DESC"));
+        panelSearch.initBack(dataBase, parser);
+        panelContent(dataBase.listIdSortingByColumn("timeUpdate", "DESC"));
+    }
+
+    private void panelContent(final ArrayList<String> listId) {
+        panelContent = new PanelContent(this, dataBase, parser, listId);
     }
 
     /**
-     * Listener by closing.
+     * Creates the scroll bar on which located the panelContent.
      */
-    private void closingMainFrame() {
-        WindowListener listenerByWindowApp = new ListenerByWindowApp();
-        mainFrame.addWindowListener(listenerByWindowApp);
+    void showPanelContent(PanelContent panelContent) {
+        scrollPaneScrollBar.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.panelContent = panelContent;
+        scrollPaneScrollBar.setViewportView(panelContent.getPanelContent());
+        mainFrame.add(scrollPaneScrollBar, BorderLayout.CENTER);
     }
 
     /**
-     * Add a listener to the window.
+     * What happens when you close the window of the application.
      */
-    public class ListenerByWindowApp implements WindowListener {
+    private void closingWinApp() {
+        mainFrame.addWindowListener(new ListenerClosingWinApp());
+    }
+
+    private class ListenerClosingWinApp implements WindowListener {
 
         @Override
         public void windowOpened(WindowEvent windowEvent) {
@@ -164,8 +123,7 @@ public class WindowApp {
 
         @Override
         public void windowClosing(WindowEvent windowEvent) {
-            closingPrepare();
-
+            prepareClosing();
             dataBase.close();
         }
 
@@ -196,23 +154,10 @@ public class WindowApp {
         }
     }
 
-    private static final Object monitor = new Object();
-
-    /**
-     * Closing the program.
-     */
-    public void closingSend() {
-        synchronized (monitor) {
-            if (!panelSearch.isSearching() && !panelContent.isVisual() && !parser.isParser()) {
-                monitor.notify();
-            }
-        }
-    }
-
     /**
      * Waiting while the other thread.
      */
-    private void closingPrepare() {
+    private void prepareClosing() {
         closing = true;
 
         mainFrame.setTitle("Closing the program. Please wait...");
@@ -232,9 +177,9 @@ public class WindowApp {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareSearching() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (panelSearch.isSearching()) {
-                monitor.wait();
+                MONITOR.wait();
             }
         }
     }
@@ -245,9 +190,9 @@ public class WindowApp {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareVisibility() throws InterruptedException {
-        synchronized (monitor) {
-            while (panelContent.isVisual()) {
-                monitor.wait();
+        synchronized (MONITOR) {
+            while (panelContent.isShow()) {
+                MONITOR.wait();
             }
         }
     }
@@ -258,9 +203,20 @@ public class WindowApp {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareParser() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (parser.isParser()) {
-                monitor.wait();
+                MONITOR.wait();
+            }
+        }
+    }
+
+    /**
+     * Closing the program.
+     */
+    public void closingSend() {
+        synchronized (MONITOR) {
+            if (!panelSearch.isSearching() && !panelContent.isShow() && !parser.isParser()) {
+                MONITOR.notify();
             }
         }
     }
@@ -269,16 +225,16 @@ public class WindowApp {
         return closing;
     }
 
+    public PanelInformation getPanelInformation() {
+        return panelInformation;
+    }
+
     public PanelSearch getPanelSearch() {
         return panelSearch;
     }
 
     public PanelContent getPanelContent() {
         return panelContent;
-    }
-
-    public PanelInformation getPanelInformation() {
-        return panelInformation;
     }
 
 }

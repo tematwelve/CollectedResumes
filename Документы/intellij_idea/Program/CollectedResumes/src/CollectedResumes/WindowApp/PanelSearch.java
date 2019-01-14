@@ -17,106 +17,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Shows the panel that contains of elements the search.
+ * Creates the panel that contains of elements the search:
+ *     - search by city;
+ *     - search by salary;
+ *     - search by work experienceYear;
+ *     - search by age;
+ *     - search by all (id, titleResume, name).
  */
 public class PanelSearch {
 
+    private WindowApp windowApp;
     private DataBase dataBase;
     private Parser parser;
-    private WindowApp windowApp;
 
-    /**
-     * Creates the panel that contains of elements the search:
-     *     - search by city;
-     *     - search by salary;
-     *     - search by work experienceYear;
-     *     - search by age;
-     *     - search by all (id, titleResume, name).
-     */
     private JPanel panelSearch;
 
-    /**
-     * Creates a text field (search by city) that accepts user input.
-     */
-    private JTextField textFieldSearchCity = new JTextField();
-
-    /**
-     * Creates a text field (search by salary) that accepts user input.
-     */
-    private JTextField textFieldSearchSalary = new JTextField();
-
-    /**
-     * Creates a combo box (search by experience in years) that accept user choice.
-     */
+    private JTextField textFieldSearchCity;
+    private JTextField textFieldSearchSalary;
     private JComboBox<String> comboBoxSearchExperienceYear;
+    private JTextField textFieldSearchAge;
+    private JTextField textFieldSearchAll;
 
-    /**
-     * Creates a text field (search by age) that accepts user input.
-     */
-    private JTextField textFieldSearchAge = new JTextField();
-
-    /**
-     * Creates a text field (search by all (id, titleResume, name)) that accepts user input.
-     */
-    private JTextField textFieldSearchAll = new JTextField();
-
-    /**
-     * Sortable column.
-     */
     private JComboBox<String> comboBoxSortColumn;
-
-    /**
-     * The type of sorting.
-     */
     private JComboBox<String> comboBoxSortType;
 
-    /**
-     * Search at the value.
-     */
-    private JButton buttonSearch = new JButton();
+    private JButton buttonSearch;
 
-    /**
-     * Location of text field (search by city).
-     */
     private static final int LOCATION_SEARCH_CITY = 0;
-
-    /**
-     * Location of text field (search by salary).
-     */
     private static final int LOCATION_SEARCH_SALARY = 1;
-
-    /**
-     * Location of text field (search by work experienceYear).
-     */
     private static final int LOCATION_SEARCH_EXPERIENCE_YEAR = 2;
-
-    /**
-     * Location of text field (search by age).
-     */
     private static final int LOCATION_SEARCH_AGE = 3;
-
-    /**
-     * Location of text field (search by all).
-     */
     private static final int LOCATION_SEARCH_ALL = 4;
+    private static final int LOCATION_SORT_COLUMN = 5;
+    private static final int LOCATION_SORT_TYPE = 6;
+    private static final int LOCATION_BUTTON_SEARCH = 7;
+
+    private boolean searching;
 
     /**
-     * Location of button search.
+     * To control access to an object.
      */
-    private static final int LOCATION_BUTTON_SEARCH = 5;
+    private static final Object MONITOR = new Object();
 
-    /**
-     * Searching the runs.
-     */
-    private boolean searching = false;
-
-    /**
-     * Constructor.
-     */
     PanelSearch(final WindowApp windowApp) {
         this.windowApp = windowApp;
 
-        initializePanelSearch();
+        initPanelSearch();
 
         createTextFieldSearch();
         createComboBoxSortColumn();
@@ -124,22 +70,20 @@ public class PanelSearch {
         createButtonSearch();
     }
 
-    /**
-     * Initialize the panel search.
-     */
-    private void initializePanelSearch() {
-        panelSearch = new JPanel(); // initialize
-        panelSearch.setLayout(new GridBagLayout()); // add to the panel GridBagLayout manager
+    private void initPanelSearch() {
+        panelSearch = new JPanel();
+        panelSearch.setLayout(new GridBagLayout());
     }
 
-    /**
-     * Creates of text field for search.
-     */
     private void createTextFieldSearch() {
+        textFieldSearchCity = new JTextField();
         createTextFieldSearch("City", textFieldSearchCity, LOCATION_SEARCH_CITY, false);
+        textFieldSearchSalary = new JTextField();
         createTextFieldSearch("Salary", textFieldSearchSalary, LOCATION_SEARCH_SALARY, true);
         createComboBoxSearch();
+        textFieldSearchAge = new JTextField();
         createTextFieldSearch("Age", textFieldSearchAge, LOCATION_SEARCH_AGE, true);
+        textFieldSearchAll = new JTextField();
         createTextFieldSearch("All", textFieldSearchAll, LOCATION_SEARCH_ALL, false);
     }
 
@@ -152,8 +96,7 @@ public class PanelSearch {
      * @param digit filter for input (if this is true enter digits).
      */
     private void createTextFieldSearch(final String column, JTextField textFieldSearchColumn, final int location, final boolean digit) {
-        JPanel panelSearchByColumn = new JPanel(); // initialize
-        textFieldSearchColumn.setColumns(6); // size of text field
+        textFieldSearchColumn.setColumns(6);
         textFieldSearchColumn.setText(column);
         textFieldSearchColumn.addFocusListener(new JTextFieldSearchHintFocusListener(textFieldSearchColumn, column));
 
@@ -162,10 +105,36 @@ public class PanelSearch {
             doc.setDocumentFilter(new DigitFilter(column));
         }
 
-        panelSearchByColumn.add(textFieldSearchColumn); // add textField in panelSearchByColumn
+        JPanel panelSearchByColumn = new JPanel();
+        panelSearchByColumn.add(textFieldSearchColumn);
         panelSearch.add(panelSearchByColumn, new GridBagConstraints(location, 0, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1, 1, 1, 1), 0, 0)); // visual of text field search
+                new Insets(1, 1, 1, 1), 0, 0));
+    }
+
+    private class JTextFieldSearchHintFocusListener implements FocusListener {
+
+        private JTextField textFieldSearchColumn;
+        private String column;
+
+        private JTextFieldSearchHintFocusListener(final JTextField textFieldSearchColumn, final String column) {
+            this.textFieldSearchColumn = textFieldSearchColumn;
+            this.column = column;
+        }
+
+        @Override
+        public void focusGained(FocusEvent focusEvent) {
+            if (textFieldSearchColumn.getText().contains(column)) {
+                textFieldSearchColumn.setText("");
+            }
+        }
+
+        @Override
+        public void focusLost(FocusEvent focusEvent) {
+            if (textFieldSearchColumn.getText().isEmpty()) {
+                textFieldSearchColumn.setText(column);
+            }
+        }
     }
 
     private class DigitFilter extends DocumentFilter {
@@ -201,38 +170,9 @@ public class PanelSearch {
         }
     }
 
-    private class JTextFieldSearchHintFocusListener implements FocusListener {
-
-        private JTextField textFieldSearchColumn;
-        private String column;
-
-        private JTextFieldSearchHintFocusListener(final JTextField textFieldSearchColumn, final String column) {
-            this.textFieldSearchColumn = textFieldSearchColumn;
-            this.column = column;
-        }
-
-        @Override
-        public void focusGained(FocusEvent focusEvent) {
-            if (textFieldSearchColumn.getText().contains(column)) {
-                textFieldSearchColumn.setText("");
-            }
-        }
-
-        @Override
-        public void focusLost(FocusEvent focusEvent) {
-            if (textFieldSearchColumn.getText().isEmpty()) {
-                textFieldSearchColumn.setText(column);
-            }
-        }
-    }
-
-    /**
-     * Creates a combo box, a contains (search by experience in years).
-     *
-     */
     private void createComboBoxSearch() {
         String[] columnElement = {
-                "Стаж",
+                "стаж",
                 "без опыта",
                 "до 1 года",
                 "1-3 года",
@@ -241,7 +181,6 @@ public class PanelSearch {
         };
 
         comboBoxSearchExperienceYear = new JComboBox<>(columnElement);
-
         comboBoxSearchExperienceYear.setSelectedItem("стаж");
 
         panelSearch.add(comboBoxSearchExperienceYear, new GridBagConstraints(LOCATION_SEARCH_EXPERIENCE_YEAR, 0, 1, 1, 0, 0,
@@ -249,9 +188,6 @@ public class PanelSearch {
                 new Insets(1, 1, 1, 1), 0, 0));
     }
 
-    /**
-     * Creates a combo box, a sort the column.
-     */
     private void createComboBoxSortColumn() {
         String[] columnElement = {
                 "salary",
@@ -261,17 +197,13 @@ public class PanelSearch {
         };
 
         comboBoxSortColumn = new JComboBox<>(columnElement);
-
         comboBoxSortColumn.setSelectedItem("timeUpdate");
 
-        panelSearch.add(comboBoxSortColumn, new GridBagConstraints(5, 0, 1, 1, 0, 0,
+        panelSearch.add(comboBoxSortColumn, new GridBagConstraints(LOCATION_SORT_COLUMN, 0, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(1, 1, 1, 1), 0, 0));
     }
 
-    /**
-     * Creates a combo box, a the type sort.
-     */
     private void createComboBoxSortType() {
         String[] itemSort = {
                 "ASC",
@@ -279,60 +211,42 @@ public class PanelSearch {
         };
 
         comboBoxSortType = new JComboBox<>(itemSort);
-
         comboBoxSortType.setSelectedItem("DESC");
 
-        panelSearch.add(comboBoxSortType, new GridBagConstraints(6, 0, 1, 1, 0, 0,
+        panelSearch.add(comboBoxSortType, new GridBagConstraints(LOCATION_SORT_TYPE, 0, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
                 new Insets(1, 1, 1, 1), 0, 0));
     }
 
-    /**
-     * Creates the button search that parses text field search.
-     */
     private void createButtonSearch() {
-        panelSearch.add(buttonSearch, new GridBagConstraints(7, 0, 1, 1, 0, 0,
+        buttonSearch = new JButton();
+        buttonSearch.setText("Search");
+        panelSearch.add(buttonSearch, new GridBagConstraints(LOCATION_BUTTON_SEARCH, 0, 1, 1, 0, 0,
                 GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                new Insets(1, 1, 1, 1), 0, 0)); // visual
-
-        buttonSearch.setText("Search"); // set name
+                new Insets(1, 1, 1, 1), 0, 0));
     }
 
-    /**
-     * Initialize for searching in database and turn thread.
-     *
-     * @param dataBase Get value from database, after searching.
-     * @param parser For turn thread (if parser run, panelSearch wait).
-     */
-    void initialBack(DataBase dataBase, Parser parser) {
+    void initBack(final DataBase dataBase, final Parser parser) {
         this.dataBase = dataBase;
         this.parser = parser;
-
         listenerButtonSearch();
     }
 
-    /**
-     * Listener by button search.
-     */
     private void listenerButtonSearch() {
-        ActionListener listenerByButtonSearch = new ListenerByButtonSearch(dataBase);
-        buttonSearch.addActionListener(listenerByButtonSearch); // add listener
+        buttonSearch.addActionListener(new ListenerButtonSearch(dataBase));
     }
 
-    /**
-     * Add a listener to the search button.
-     */
-    public class ListenerByButtonSearch implements ActionListener {
+    private class ListenerButtonSearch implements ActionListener {
 
         private DataBase dataBase;
 
-        public ListenerByButtonSearch(DataBase dataBase) {
+        ListenerButtonSearch(DataBase dataBase) {
             this.dataBase = dataBase;
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            searchPrepare();
+            prepareSearch();
 
             String sortColumn = (String) comboBoxSortColumn.getSelectedItem();
             String sortType = (String) comboBoxSortType.getSelectedItem();
@@ -344,6 +258,9 @@ public class PanelSearch {
             searchSalary = fieldSearchHint(searchSalary, "salary");
 
             String searchExperienceYear = (String) comboBoxSearchExperienceYear.getSelectedItem();
+            if (searchExperienceYear != null) {
+                searchExperienceYear = searchExperienceYear.equals("стаж") ? "" : searchExperienceYear;
+            }
 
             String searchAge = textFieldSearchAge.getText().trim().toLowerCase();
             searchAge = fieldSearchHint(searchAge, "age");
@@ -353,10 +270,12 @@ public class PanelSearch {
 
             ArrayList<String> listIdSorted = dataBase.listIdSortingByColumn(sortColumn, sortType);
 
-            List<String> listIdContainsValues = dataBase.listIdContainsValues(
-                    searchCity, searchSalary, searchExperienceYear, searchAge, searchAll);
+            if (!(searchCity + searchSalary + searchExperienceYear + searchAge + searchAll).isEmpty()) {
+                List<String> listIdContainsValues = dataBase.listIdContainsValues(
+                        searchCity, searchSalary, searchExperienceYear, searchAge, searchAll);
 
-            listIdSorted.retainAll(listIdContainsValues);
+                listIdSorted.retainAll(listIdContainsValues);
+            }
 
             contentSearch(listIdSorted);
         }
@@ -376,14 +295,23 @@ public class PanelSearch {
             return searchValue;
         }
 
+        /**
+         * Create new panel content.
+         *
+         * @param listIdSorted List id with founded resumes.
+         */
+        private void contentSearch(final ArrayList<String> listIdSorted) {
+            searching = false;
+            windowApp.getPanelContent().updatePanelContent(listIdSorted);
+        }
+
     }
 
     /**
      * Waiting while the other thread.
      */
-    private void searchPrepare() {
+    private void prepareSearch() {
         searching = true;
-
         try {
             prepareClosing();
             prepareVisibility();
@@ -399,13 +327,11 @@ public class PanelSearch {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareClosing() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (windowApp.isClosing()) {
                 searching = false;
-
                 windowApp.closingSend();
-
-                monitor.wait();
+                MONITOR.wait();
             }
         }
     }
@@ -416,9 +342,9 @@ public class PanelSearch {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareVisibility() throws InterruptedException {
-        synchronized (monitor) {
-            while (windowApp.getPanelContent().isVisual()) {
-                monitor.wait();
+        synchronized (MONITOR) {
+            while (windowApp.getPanelContent().isShow()) {
+                MONITOR.wait();
             }
         }
     }
@@ -429,35 +355,21 @@ public class PanelSearch {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareParser() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (parser.isParser()) {
-                monitor.wait();
+                MONITOR.wait();
             }
         }
     }
 
     /**
-     * Create new panel content.
-     *
-     * @param listIdSorted List id with founded resumes.
-     */
-    private void contentSearch(ArrayList<String> listIdSorted) {
-        searching = false;
-//        windowApp.panelContent(windowApp, listIdSorted);
-        windowApp.getPanelContent().createPanelContent(listIdSorted);
-    }
-
-    private final Object monitor = new Object();
-
-    /**
      * Open thread for the searching.
      */
-    public void searchSend() {
-        synchronized (monitor) {
-            if (!windowApp.isClosing() && !windowApp.getPanelContent().isVisual() && !parser.isParser()) {
+    public void wake() {
+        synchronized (MONITOR) {
+            if (!windowApp.isClosing() && !windowApp.getPanelContent().isShow() && !parser.isParser()) {
                 searching = true;
-
-                monitor.notify();
+                MONITOR.notify();
             }
         }
     }

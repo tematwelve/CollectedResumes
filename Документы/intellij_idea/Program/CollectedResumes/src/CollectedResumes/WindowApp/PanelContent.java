@@ -12,171 +12,100 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Shows the panel that contains of content.
+ * Creates the panel that contains of content.
  */
 public class PanelContent {
 
+    private WindowApp windowApp;
     private DataBase dataBase;
     private Parser parser;
-    private WindowApp windowApp;
 
-    /**
-     * Creates panel on which is located the main (full) content.
-     */
     private JPanel panelContent;
 
-    private JButton buttonNext;
+    private JButton buttonNext = new JButton();
 
     /**
      * Elements resume (id, title resume, name...).
      */
-    private List<JPanel> listPanelElements = new ArrayList<>();
+    private List<JPanel> listPanelElements;
 
     /**
      * The button that hides the hidden elements.
      */
-    private List<JButton> listButtonHide = new ArrayList<>();
+    private List<JButton> listButtonHide;
 
-    /**
-     * List id for show.
-     */
     private List<String> listId;
 
-    /**
-     * Displayed content the runs.
-     */
-    private boolean visual = false;
-
-    /**
-     * The number of elements on the page.
-     */
-    private final int NUMBER_ELEMENTS_PAGE = 25;
-
-    /**
-     * Location of the id element.
-     */
     private static final int LOCATION_ID = 0;
-
-    /**
-     * Location of the URL resume element.
-     */
     private static final int LOCATION_URL_RESUME = 1;
-
-    /**
-     * Location of the title resume element.
-     */
     private static final int LOCATION_TITLE_RESUME = 2;
-
-    /**
-     * Location of the salary element.
-     */
     private static final int LOCATION_SALARY = 3;
-
-    /**
-     * Location of the experience in years element.
-     */
     private static final int LOCATION_EXPERIENCE_YEAR = 4;
-
-    /**
-     * Location of the education element.
-     */
     private static final int LOCATION_EDUCATION = 5;
-
-    /**
-     * Location of the name element.
-     */
     private static final int LOCATION_NAME = 6;
-
-    /**
-     * Location of the age element.
-     */
     private static final int LOCATION_AGE = 7;
-
-    /**
-     * Location of the city element.
-     */
     private static final int LOCATION_CITY = 8;
-
-    /**
-     * Location of the old work location element.
-     */
     private final int LOCATION_OLD_WORK_LOCATION = 9;
-
-    /**
-     * Location of the old work who element.
-     */
     private final int LOCATION_OLD_WORK_WHO = 10;
-
-    /**
-     * Location of the old work time element.
-     */
     private final int LOCATION_OLD_WORK_TIME = 11;
-
-    /**
-     * Location of the old work specification element.
-     */
     private final int LOCATION_OLD_WORK_SPECIFICATION = 12;
-
-    /**
-     * Location of the key skill element.
-     */
     private static final int LOCATION_KEY_SKILL = 13;
-
-    /**
-     * Location of the update time element.
-     */
     private static final int LOCATION_TIME_UPDATE = 14;
-
-    /**
-     * Location of the button hide element.
-     */
     private static final int LOCATION_BUTTON_HIDE = 15;
 
-    /**
-     * The number of elements.
-     */
-    private int numberElements;
+    private final int NUMBER_ELEMENTS_PAGE = 25;
 
-    private int numberPage = 0;
+    private boolean show;
+
+    private int numberElements;
 
     private int currentPage;
 
     /**
-     * Constructor.
-     *
-     * @param listId List id for show.
+     * To control access to an object.
      */
-    PanelContent(DataBase dataBase, Parser parser, final WindowApp windowApp, final ArrayList<String> listId) {
+    private static final Object MONITOR = new Object();
+
+    private Thread panelContentThread;
+
+    PanelContent(final WindowApp windowApp, final  DataBase dataBase, final Parser parser, final ArrayList<String> listId) {
+        this.windowApp = windowApp;
         this.dataBase = dataBase;
         this.parser = parser;
-        this.windowApp = windowApp;
-        createPanelContent(listId);
+        buttonNext.setText("Next");
+        buttonNext.addActionListener(new JButtonNextActionListener());
+        updatePanelContent(listId);
     }
 
-    void createPanelContent(ArrayList<String> listId) {
-        currentPage = 0;
+    void updatePanelContent(final ArrayList<String> listId) {
         this.listId = listId;
         numberElements = this.listId.size();
+        currentPage = 0;
         show();
     }
 
-    /**
-     * To shows the content.
-     */
     private void show() {
-        visual = true;
+        show = true;
 
         windowApp.getPanelInformation().updateLabelNumberFindElement(numberElements);
 
         panelContent  = new JPanel(new GridBagLayout());
-        windowApp.showPanelContent(this);
-        if (numberElements > 0) {
-            numberPage = numberPageCalculate();
 
-            createBox(currentPage);
+        windowApp.showPanelContent(this);
+
+        listPanelElements = new ArrayList<>();
+        listButtonHide = new ArrayList<>();
+
+        if (panelContentThread != null) {
+            panelContentThread.interrupt();
         }
 
-//        visual = false;
+        if (numberElements > 0) {
+            createBox(currentPage);
+        } else {
+            show = false;
+            windowApp.getPanelInformation().updateLabelNumberDisplayedElement(0);
+        }
 
         parser.parserSend();
     }
@@ -187,70 +116,51 @@ public class PanelContent {
      * @param page Number the page.
      */
     private void createBox(final int page) {
-        Thread panelContentThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int element = NUMBER_ELEMENTS_PAGE * (page); element < numberElements; element++) {
-                    displayedPrepare();
+        panelContentThread = new Thread(() -> {
+            for (int element = NUMBER_ELEMENTS_PAGE * (page); element < numberElements; element++) {
+                prepareShow();
 
-                    if (windowApp.getPanelSearch().isSearching()) {
-                        visual = false;
-                        windowApp.getPanelSearch().searchSend();
-                        break;
-                    }
-
-                    listPanelElements.add(element, new JPanel(new GridBagLayout()));
-
-                    visualElements(element, listId.get(element));
-
-                    panelContent.add(listPanelElements.get(element),
-                            new GridBagConstraints(
-                                    0, element, 1, 1, 1, ((element == numberElements - 1) ? 1 : 0),
-                                    GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                                    new Insets(1, 1, ((element == ((page + 1) * NUMBER_ELEMENTS_PAGE) - 1) ? 1 : 10), 1),
-                                    0, 0));
-
-                    windowApp.getPanelInformation().updateLabelNumberDisplayedElement(element + 1);
-
-                    if (element == ((page + 1) * NUMBER_ELEMENTS_PAGE) - 1) {
-                        buttonNext = new JButton();
-                        buttonNext.setEnabled(true);
-                        buttonNext.setText("Next");
-                        buttonNext.addActionListener(new JButtonNextActionListener());
-                        panelContent.add(buttonNext,
-                                new GridBagConstraints(0, element + 1, 1, 1, 1, 1,
-                                        GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
-                                        new Insets(1, 1, 1, 1), 0, 0));
-                        break;
-                    }
+                if (windowApp.getPanelSearch().isSearching()) {
+                    show = false;
+                    windowApp.getPanelSearch().wake();
+                    break;
                 }
-                visual = false;
+
+                listPanelElements.add(element, new JPanel(new GridBagLayout()));
+
+                visualElements(element, listId.get(element));
+
+                panelContent.add(listPanelElements.get(element),
+                        new GridBagConstraints(
+                                0, element, 1, 1, 1, ((element == numberElements - 1) ? 1 : 0),
+                                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                                new Insets(1, 1, ((element == ((page + 1) * NUMBER_ELEMENTS_PAGE) - 1) ? 1 : 10), 1),
+                                0, 0));
+
+                windowApp.getPanelInformation().updateLabelNumberDisplayedElement(element + 1);
+
+                if (element == ((page + 1) * NUMBER_ELEMENTS_PAGE) - 1) {
+                    buttonNext.setEnabled(true);
+//                    buttonNext.setText("Next");
+//                    buttonNext.addActionListener(new JButtonNextActionListener());
+                    panelContent.add(buttonNext,
+                            new GridBagConstraints(0, element + 1, 1, 1, 1, 1,
+                                    GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                                    new Insets(1, 1, 1, 1), 0, 0));
+                    break;
+                }
             }
+            show = false;
         });
         panelContentThread.setName("PanelContent");
         panelContentThread.setPriority(5);
         panelContentThread.start();
     }
 
-    private final Object monitor = new Object();
-
-    /**
-     * Open thread for the displayed content.
-     */
-    public void displayedSend() {
-        synchronized (monitor) {
-            if (!windowApp.isClosing() && !windowApp.getPanelSearch().isSearching() && !parser.isParser()) {
-                visual = true;
-
-                monitor.notify();
-            }
-        }
-    }
-
     /**
      * Waiting while the other thread.
      */
-    private void displayedPrepare() {
+    private void prepareShow() {
         try {
             prepareClosing();
             prepareParser();
@@ -265,13 +175,13 @@ public class PanelContent {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareClosing() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (windowApp.isClosing()) {
-                visual = false;
+                show = false;
 
                 windowApp.closingSend();
 
-                monitor.wait();
+                MONITOR.wait();
             }
         }
     }
@@ -282,9 +192,21 @@ public class PanelContent {
      * @throws InterruptedException Monitor wait.
      */
     private void prepareParser() throws InterruptedException {
-        synchronized (monitor) {
+        synchronized (MONITOR) {
             while (parser.isParser()) {
-                monitor.wait();
+                MONITOR.wait();
+            }
+        }
+    }
+
+    /**
+     * Open thread for the displayed content.
+     */
+    public void displayedSend() {
+        synchronized (MONITOR) {
+            if (!windowApp.isClosing() && !windowApp.getPanelSearch().isSearching() && !parser.isParser()) {
+                show = true;
+                MONITOR.notify();
             }
         }
     }
@@ -340,6 +262,7 @@ public class PanelContent {
      * @param id by id calculates the value from the database;
      * @param column column (type) desired value;
      * @param location the location of the element in box;
+     * @param hide hide element resume.
      */
     private void visualElement(final int element, final String id, final String column, final int location,
                                final boolean hide) {
@@ -431,34 +354,19 @@ public class PanelContent {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             buttonNext.setEnabled(false);
-            visual = true;
-            createBox(++currentPage);
-//            visual = false;
+            show = true;
+            currentPage++;
+            createBox(currentPage);
         }
 
-    }
-
-    /**
-     * Calculates the number of pages.
-     *
-     * @return The number of page.
-     */
-    private int numberPageCalculate() {
-        int numberPage;
-        if (numberElements % NUMBER_ELEMENTS_PAGE == 0) {
-            numberPage = numberElements / NUMBER_ELEMENTS_PAGE;
-        } else {
-            numberPage = Math.floorDiv(numberElements, NUMBER_ELEMENTS_PAGE) + 1;
-        }
-        return numberPage;
     }
 
     JPanel getPanelContent() {
         return panelContent;
     }
 
-    public boolean isVisual() {
-        return visual;
+    public boolean isShow() {
+        return show;
     }
 
 }

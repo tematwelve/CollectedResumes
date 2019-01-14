@@ -114,7 +114,6 @@ public class Parser {
         if (dataBase.getSize() < dataBase.getPrioritySize()) {
             for (int page = 0; page <= 9975; page++) {
                 parser = true;
-                windowApp.getPanelInformation().editorTextPanelCondition("Parsing. Please wait...");
                 windowApp.getPanelInformation().visibilityPanelCondition(true);
 
                 parser(page);
@@ -206,7 +205,7 @@ public class Parser {
      */
     public void parserSend() {
         synchronized (monitor) {
-            if (!windowApp.isClosing() && !windowApp.getPanelSearch().isSearching() && !windowApp.getPanelContent().isVisual()) {
+            if (!windowApp.isClosing() && !windowApp.getPanelSearch().isSearching() && !windowApp.getPanelContent().isShow()) {
                 monitor.notify();
             }
         }
@@ -257,7 +256,7 @@ public class Parser {
                 parser = false;
                 windowApp.getPanelInformation().visibilityPanelCondition(false);
 
-                windowApp.getPanelSearch().searchSend();
+                windowApp.getPanelSearch().wake();
 
                 monitor.wait();
             }
@@ -271,7 +270,7 @@ public class Parser {
      */
     private void prepareVisibility() throws InterruptedException {
         synchronized (monitor) {
-            while (windowApp.getPanelContent() != null && windowApp.getPanelContent().isVisual()) {
+            while (windowApp.getPanelContent() != null && windowApp.getPanelContent().isShow()) {
                 parser = false;
                 windowApp.getPanelInformation().visibilityPanelCondition(false);
 

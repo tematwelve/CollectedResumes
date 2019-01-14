@@ -14,8 +14,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/WindowApp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="97" column="22" lean-forward="true" selection-start-line="97" selection-start-column="22" selection-end-line="97" selection-end-column="22" />
+            <state relative-caret-position="186">
+              <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
+              <folding>
+                <element signature="e#3421#3422#0" expanded="true" />
+                <element signature="e#3494#3495#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -23,13 +27,19 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelContent.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="499">
-              <caret line="215" column="31" selection-start-line="215" selection-start-column="31" selection-end-line="215" selection-end-column="31" />
+            <state relative-caret-position="266">
+              <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelInformation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="94">
+              <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
               <folding>
-                <element signature="e#13776#13777#0" expanded="true" />
-                <element signature="e#13811#13812#0" expanded="true" />
-                <element signature="e#13844#13845#0" expanded="true" />
-                <element signature="e#13873#13874#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -38,12 +48,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelSearch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1620">
-              <caret line="443" column="25" selection-start-line="443" selection-start-column="25" selection-end-line="443" selection-end-column="25" />
+            <state relative-caret-position="269">
+              <caret line="272" column="17" lean-forward="true" selection-start-line="272" selection-start-column="17" selection-end-line="272" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#14350#14351#0" expanded="true" />
-                <element signature="e#14382#14383#0" expanded="true" />
+                <element signature="e#8367#8368#0" expanded="true" />
+                <element signature="e#8449#8450#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -85,15 +95,15 @@
         <option value="$PROJECT_DIR$/src/CollectedResumes/Test.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/Parser/ParserWhatsapp.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/Parser/PageSourceWhatsapp.java" />
-        <option value="$PROJECT_DIR$/src/CollectedResumes/Main.java" />
-        <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelInformation.java" />
         <option value="$PROJECT_DIR$/CollectedResumes.iml" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/Validate/Validate.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/Parser/PageSource.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/DataBase/DataBase.java" />
-        <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelSearch.java" />
+        <option value="$PROJECT_DIR$/src/CollectedResumes/Main.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/Parser/Parser.java" />
+        <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelInformation.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/WindowApp.java" />
+        <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelSearch.java" />
         <option value="$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelContent.java" />
       </list>
     </option>
@@ -135,46 +145,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
-              <item name="DataBase" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
-              <item name="Parser" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
-              <item name="Validate" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
-              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
-              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
-              <item name="WindowApp" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -220,13 +190,53 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
+              <item name="DataBase" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
+              <item name="Parser" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
+              <item name="Validate" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="CollectedResumes" type="58d84e3e:PackageViewProjectNode" />
+              <item name="CollectedResumes" type="616d4139:PackageViewModuleNode" />
+              <item name="CollectedResumes" type="1f31426a:PackageElementNode" />
+              <item name="WindowApp" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sqlite-jdbc-3.21.0.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/sqlite-jdbc-3.21.0.jar!/" />
     <property name="settings.editor.selected.configurable" value="preferences.intentionPowerPack" />
   </component>
   <component name="RunDashboard">
@@ -272,6 +282,7 @@
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -285,6 +296,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-27" width="1366" height="795" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24597365" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -293,7 +305,7 @@
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.390625" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2799479" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -316,50 +328,13 @@
     <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/phantomjsdriver.log">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68396" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/phantomjsdriver.log" />
     <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Parser/ParserWhatsapp.java" />
     <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Parser/PageSourceWhatsapp.java" />
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Resume.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/sql/ResultSet.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/javax/swing/text/DocumentFilter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelInformation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="106" column="21" lean-forward="true" selection-start-line="106" selection-start-column="21" selection-end-line="106" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4849#4850#0" expanded="true" />
-            <element signature="e#4893#4894#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
@@ -459,16 +434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Parser/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="206" column="27" lean-forward="true" selection-start-line="206" selection-start-column="27" selection-end-line="206" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Validate/Validate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
@@ -480,42 +445,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/DataBase/DataBase.java">
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Resume.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="403" selection-start-line="403" selection-end-line="403" />
+        <state relative-caret-position="30">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelSearch.java">
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1620">
-          <caret line="443" column="25" selection-start-line="443" selection-start-column="25" selection-end-line="443" selection-end-column="25" />
+        <state relative-caret-position="270">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding>
+            <element signature="e#322#323#0" expanded="true" />
+            <element signature="e#353#354#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/javax/swing/text/DocumentFilter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/Parser/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="240" column="26" selection-start-line="240" selection-start-column="26" selection-end-line="240" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#14350#14351#0" expanded="true" />
-            <element signature="e#14382#14383#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Thread.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="256" column="16" selection-start-line="256" selection-start-column="16" selection-end-line="256" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelInformation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="81" column="26" selection-start-line="81" selection-start-column="26" selection-end-line="81" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/WindowApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="97" column="22" lean-forward="true" selection-start-line="97" selection-start-column="22" selection-end-line="97" selection-end-column="22" />
+        <state relative-caret-position="186">
+          <caret line="92" column="41" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
+          <folding>
+            <element signature="e#3421#3422#0" expanded="true" />
+            <element signature="e#3494#3495#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/javax/swing/JComboBox.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="242" column="18" selection-start-line="242" selection-start-column="18" selection-end-line="242" selection-end-column="18" />
+          <folding>
+            <element signature="e#7614#7615#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelSearch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="272" column="17" lean-forward="true" selection-start-line="272" selection-start-column="17" selection-end-line="272" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8367#8368#0" expanded="true" />
+            <element signature="e#8449#8450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CollectedResumes/DataBase/DataBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="405" selection-start-line="405" selection-end-line="405" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CollectedResumes/WindowApp/PanelContent.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="215" column="31" selection-start-line="215" selection-start-column="31" selection-end-line="215" selection-end-column="31" />
-          <folding>
-            <element signature="e#13776#13777#0" expanded="true" />
-            <element signature="e#13811#13812#0" expanded="true" />
-            <element signature="e#13844#13845#0" expanded="true" />
-            <element signature="e#13873#13874#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="266">
+          <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="8" />
         </state>
       </provider>
     </entry>
